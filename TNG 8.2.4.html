@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TotallyNotGoogle - Void Edition</title>
+    <style>
+        :root { --bg: #121212; --box: #1a1a1a; --red: #ff4040; --cyan: #00bcd4; --green: #00ff41; }
+        body { font-family: 'Courier New', monospace; background: var(--bg); color: #e0e0e0; margin: 0; overflow: hidden; height: 100vh; }
+        
+        /* Persistent Nav */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px; display: flex; justify-content: flex-end; align-items: center; gap: 20px; box-sizing: border-box; z-index: 1000; background: rgba(18,18,18,0.9); }
+        .nav-link { color: var(--cyan); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 14px; }
+        .profile-area { display: flex; align-items: center; gap: 10px; }
+        .sub-count { color: var(--red); font-weight: bold; font-size: 12px; }
+        .void-pfp { width: 30px; height: 30px; background: radial-gradient(circle, #444, #000); border-radius: 50%; border: 1px solid var(--red); }
+        .signin-btn { background: var(--red); color: white; border: none; padding: 8px 18px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
+
+        /* General View Setup */
+        .view { display: none; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; }
+        #search-page { display: flex; }
+
+        .logo { font-size: 60px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
+        .c1 { color: #ff6e40; } .c2 { color: #9c27b0; } .c3 { color: #00bcd4; } .c4 { color: #ff4081; }
+        .search-bar { width: 90%; max-width: 600px; height: 50px; background: #1e1e1e; border: 2px solid #333; color: var(--green); padding: 0 15px; border-radius: 8px; outline: none; }
+
+        /* Header Bars */
+        #proxy-page, #tube-page { justify-content: flex-start; background: #000; }
+        .header-bar { width: 100%; background: #1a1a1a; padding: 10px; display: flex; gap: 10px; border-bottom: 2px solid var(--cyan); box-sizing: border-box; align-items: center; }
+        .tube-bar { border-bottom-color: var(--red); justify-content: space-between; }
+        
+        .url-input { flex-grow: 1; background: #000; border: 1px solid #333; color: var(--green); padding: 8px; outline: none; }
+        iframe { width: 100%; flex-grow: 1; border: none; background: #000; }
+
+        .login-box { background: var(--box); border: 1px solid #333; padding: 40px; border-radius: 8px; text-align: center; width: 350px; }
+        .login-input { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 13px; color: #fff; margin-bottom: 20px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav" id="global-nav">
+        <span class="nav-link" onclick="showView('search-page')">Home</span>
+        <span class="nav-link" onclick="showView('proxy-page')">Proxy</span>
+        <span class="nav-link" onclick="showView('tube-page')">Tube</span>
+        <div class="profile-area">
+            <span class="sub-count">69 VOID SUBSCRIBERS</span>
+            <div class="void-pfp"></div>
+        </div>
+        <button class="signin-btn" onclick="showView('login-page')">Sign In</button>
+    </div>
+
+    <!-- SEARCH -->
+    <div id="search-page" class="view">
+        <div class="logo"><span class="c1">T</span><span class="c2">o</span><span class="c3">t</span><span class="c4">a</span><span class="c1">l</span><span class="c2">l</span><span class="c3">y</span><span class="c4">N</span><span class="c1">o</span><span class="c2">t</span><span class="c3">G</span><span class="c4">o</span><span class="c1">o</span><span class="c2">g</span><span class="c3">l</span><span class="c4">e</span></div>
+        <input type="text" class="search-bar" placeholder="SEARCH THE VOID..." onkeydown="if(event.key==='Enter') window.open('https://duckduckgo.com')">
+    </div>
+
+    <!-- PROXY -->
+    <div id="proxy-page" class="view">
+        <div class="header-bar">
+            <span style="color:var(--cyan); font-weight:bold;">TNG PROXY</span>
+            <input type="text" id="proxy-url" class="url-input" placeholder="Enter URL (e.g. google.com)" onkeydown="if(event.key==='Enter') loadProxy('proxy-url', 'proxy-frame')">
+            <button onclick="location.reload()" style="background:none; color:var(--red); border:none; cursor:pointer;">[REBOOT]</button>
+        </div>
+        <iframe id="proxy-frame"></iframe>
+    </div>
+
+    <!-- TUBE -->
+    <div id="tube-page" class="view">
+        <div class="header-bar tube-bar">
+            <span style="color:var(--red); font-weight:bold;">TotallyNotTube</span>
+            <select id="tube-selector" class="url-input" style="max-width: 300px;" onchange="document.getElementById('tube-frame').src = this.value">
+                <option value="https://thepixora.com">TNG TUBE 5 (Pixora)</option>
+                <option value="https://nadeko.net">TNG TUBE 1 (Chile)</option>
+                <option value="https://tux.pizza">TNG TUBE 2 (France)</option>
+            </select>
+            <button onclick="showView('search-page')" style="background:none; color:white; border:1px solid #333; cursor:pointer;">[X]</button>
+        </div>
+        <iframe id="tube-frame" src="https://thepixora.com"></iframe>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-page" class="view">
+        <div class="login-box">
+            <div id="login-step-1">
+                <input type="text" id="email-in" class="login-input" placeholder="Email or not">
+                <button class="signin-btn" style="width:100%" onclick="document.getElementById('login-step-1').style.display='none'; document.getElementById('login-step-2').style.display='block';">Next</button>
+            </div>
+            <div id="login-step-2" style="display:none;">
+                <div style="color:var(--cyan); margin-bottom:15px;">TotallyNotGoogle@69.com</div>
+                <input type="password" class="login-input" placeholder="Password or not">
+                <button class="signin-btn" style="width:100%" onclick="showView('tube-page')">Enter Tube</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showView(id) {
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById(id).style.display = 'flex';
+            document.getElementById('global-nav').style.display = (id === 'proxy-page' || id === 'tube-page') ? 'none' : 'flex';
+        }
+
+        async function loadProxy(inputId, frameId) {
+            const rawUrl = document.getElementById(inputId).value;
+            if(!rawUrl) return;
+            const targetUrl = rawUrl.startsWith('http') ? rawUrl : 'https://' + rawUrl;
+            const frame = document.getElementById(frameId);
+            
+            // CORRECT FULL URLS
+            const proxyBase = "https://cors-anywhere.herokuapp.com/";
+            const fullAuthUrl = "https://cors-anywhere.herokuapp.com/corsdemo";
+
+            try {
+                const res = await fetch(proxyBase + targetUrl, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                const html = await res.text();
+                const baseTag = `<base href="${targetUrl}">`;
+                const cleanHtml = html.replace(/<meta.*http-equiv="Content-Security-Policy".*?>/gi, '');
+                frame.srcdoc = cleanHtml.replace('<head>', '<head>' + baseTag);
+            } catch (e) {
+                frame.srcdoc = `<body style="background:#000;color:red;text-align:center;padding:50px;font-family:monospace;">
+                    <h1>STABILITY FAILED</h1>
+                    <p>Authorize Proxy at: <br><a href="${fullAuthUrl}" target="_blank" style="color:cyan; text-decoration: underline;">${fullAuthUrl}</a></p>
+                    <p style="color:#666; font-size:12px; margin-top:20px;">You must click the link above and request access to use the Proxy.</p>
+                </body>`;
+            }
+        }
+    </script>
+</body>
+</html>
