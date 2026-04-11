@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TotallyNotGoogle - Void Edition</title>
+    <style>
+        :root { --bg: #121212; --box: #1a1a1a; --red: #ff4040; --cyan: #00bcd4; --green: #00ff41; }
+        body { font-family: 'Courier New', monospace; background: var(--bg); color: #e0e0e0; margin: 0; overflow: hidden; height: 100vh; }
+        
+        /* Persistent Nav */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px; display: flex; justify-content: flex-end; align-items: center; gap: 20px; box-sizing: border-box; z-index: 1000; background: rgba(18,18,18,0.8); }
+        .nav-link { color: var(--cyan); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 14px; }
+        .profile-area { display: flex; align-items: center; gap: 10px; }
+        .sub-count { color: var(--red); font-weight: bold; font-size: 12px; }
+        .void-pfp { width: 30px; height: 30px; background: radial-gradient(circle, #444, #000); border-radius: 50%; border: 1px solid var(--red); }
+        .signin-btn { background: var(--red); color: white; border: none; padding: 8px 18px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
+
+        /* General View Setup */
+        .view { display: none; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; }
+        #search-page { display: flex; }
+
+        /* Search Page */
+        .logo { font-size: 60px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; }
+        .c1 { color: #ff6e40; } .c2 { color: #9c27b0; } .c3 { color: #00bcd4; } .c4 { color: #ff4081; }
+        .search-bar { width: 90%; max-width: 600px; height: 50px; background: #1e1e1e; border: 2px solid #333; color: var(--green); padding: 0 15px; border-radius: 8px; outline: none; }
+
+        /* Proxy Page */
+        #proxy-page { justify-content: flex-start; background: #000; }
+        .proxy-header { width: 100%; background: #1a1a1a; padding: 10px; display: flex; gap: 10px; border-bottom: 2px solid var(--cyan); box-sizing: border-box; }
+        .proxy-bar { flex-grow: 1; background: #000; border: 1px solid #333; color: var(--green); padding: 8px; font-family: inherit; outline: none; }
+        .proxy-select { background: #333; color: var(--cyan); border: none; padding: 5px; font-family: inherit; cursor: pointer; }
+        #proxy-frame { width: 100%; flex-grow: 1; border: none; background: white; }
+
+        /* Tube Page */
+        #tube-page { justify-content: flex-start; overflow-y: auto; background: #000; }
+        .tube-header { width: 100%; background: #1a1a1a; padding: 15px; border-bottom: 2px solid var(--red); display: flex; justify-content: space-between; box-sizing: border-box; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px; width: 100%; box-sizing: border-box; }
+        .video-card { background: #111; border: 1px solid #222; padding: 10px; }
+        .thumb { height: 120px; background: #222; border: 1px dashed var(--red); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #444;}
+
+        /* Login Page */
+        .login-box { background: var(--box); border: 1px solid #333; padding: 40px; border-radius: 8px; text-align: center; width: 350px; }
+        .login-input { width: 100%; background: transparent; border: 1px solid #444; border-radius: 4px; padding: 13px; color: #fff; margin-bottom: 20px; box-sizing: border-box; font-family: inherit; }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav" id="global-nav">
+        <span class="nav-link" onclick="showView('proxy-page')">Proxy</span>
+        <span class="nav-link" onclick="showView('tube-page')">Tube</span>
+        <div class="profile-area">
+            <span class="sub-count">69 VOID SUBSCRIBERS</span>
+            <div class="void-pfp"></div>
+        </div>
+        <button class="signin-btn" onclick="showView('login-page')">Sign In</button>
+    </div>
+
+    <!-- VIEW: SEARCH -->
+    <div id="search-page" class="view">
+        <div class="logo">
+            <span class="c1">T</span><span class="c2">o</span><span class="c3">t</span><span class="c4">a</span><span class="c1">l</span><span class="c2">l</span><span class="c3">y</span><span class="c4">N</span><span class="c1">o</span><span class="c2">t</span><span class="c3">G</span><span class="c4">o</span><span class="c1">o</span><span class="c2">g</span><span class="c3">l</span><span class="c4">e</span>
+        </div>
+        <input type="text" class="search-bar" placeholder="SEARCH THE VOID..." onkeydown="if(event.key==='Enter') runVoidSearch(this.value)">
+    </div>
+
+    <!-- VIEW: PROXY -->
+    <div id="proxy-page" class="view">
+        <div class="proxy-header">
+            <select id="proxy-select" class="proxy-select">
+                <option value="https://cors-anywhere.herokuapp.com/">TNG PROXY 1</option>
+                <option value="https://allorigins.win">TNG PROXY 2</option>
+                <option value="https://freeboard.io">TNG PROXY 3</option>
+            </select>
+            <input type="text" id="proxy-url" class="proxy-bar" placeholder="Enter URL (https://...)" onkeydown="if(event.key==='Enter') startProxy()">
+            <button onclick="location.reload()" style="background:none; color:var(--red); border:none; cursor:pointer; font-weight:bold;">[EXIT]</button>
+        </div>
+        <iframe id="proxy-frame"></iframe>
+    </div>
+
+    <!-- VIEW: TUBE -->
+    <div id="tube-page" class="view">
+        <div class="tube-header">
+            <span style="color:var(--red); font-weight:bold; font-size:24px;">TotallyNotTube</span>
+            <button onclick="showView('search-page')" style="background:none; border:1px solid #333; color:white; cursor:pointer;">Back to Search</button>
+        </div>
+        <div class="video-grid">
+            <div class="video-card"><div class="thumb">VOID_1</div><span>How to Not Google</span></div>
+            <div class="video-card"><div class="thumb = VOID_2"></div><span>10 Hours of Static</span></div>
+            <div class="video-card"><div class="thumb = VOID_3"></div><span>CORS Proxy Tutorial</span></div>
+            <div class="video-card"><div class="thumb = VOID_4"></div><span>Sub to Void</span></div>
+        </div>
+    </div>
+
+    <!-- VIEW: LOGIN -->
+    <div id="login-page" class="view">
+        <div class="login-box">
+            <div class="logo" style="font-size:24px;"><span class="c1">T</span><span class="c4">N</span><span class="c3">G</span></div>
+            <div id="login-step-1">
+                <div style="font-size: 20px; margin-bottom: 20px;">Sign in</div>
+                <input type="text" id="email-in" class="login-input" placeholder="Email or not">
+                <button class="signin-btn" onclick="toPassword()">Next</button>
+            </div>
+            <div id="login-step-2" style="display:none;">
+                <div style="color:var(--cyan); margin-bottom:15px; font-weight:bold;">TotallyNotGoogle@69.com</div>
+                <input type="password" class="login-input" placeholder="Password or not">
+                <button class="signin-btn" onclick="showView('tube-page')">Enter Tube</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showView(id) {
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById(id).style.display = 'flex';
+            document.getElementById('global-nav').style.display = (id === 'proxy-page') ? 'none' : 'flex';
+        }
+
+        async function startProxy() {
+            const rawUrl = document.getElementById('proxy-url').value;
+            const proxyBase = document.getElementById('proxy-select').value;
+            const frame = document.getElementById('proxy-frame');
+
+            if(!rawUrl) return;
+            const targetUrl = rawUrl.startsWith('http') ? rawUrl : 'https://' + rawUrl;
+
+            frame.srcdoc = "<body style='background:#000;color:#00ff41;font-family:monospace;display:flex;align-items:center;justify-content:center;height:100vh;'><h1>STABILIZING VOID CONNECTION...</h1></body>";
+
+            try {
+                const response = await fetch(proxyBase + targetUrl, { 
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    redirect: 'follow'
+                });
+                
+                const finalUrl = response.url.replace(proxyBase, '');
+                const html = await response.text();
+
+                const baseTag = `<base href="${finalUrl}">`;
+                const processedHtml = html.includes('<head>') 
+                    ? html.replace('<head>', '<head>' + baseTag) 
+                    : baseTag + html;
+
+                frame.srcdoc = processedHtml;
+            } catch (e) {
+                // CORRECTED HEROKU URL HERE
+                frame.srcdoc = `<body style="background:#000;color:red;font-family:monospace;text-align:center;padding-top:50px;">
+                    <h1>STABILITY FAILED</h1>
+                    <p>Authorization required at: <br><a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" style="color:cyan; font-size:18px;">https://cors-anywhere.herokuapp.com/corsdemo</a></p>
+                    <p style="color:#888;">Visit the link above and click "Request temporary access" to enable Proxy 1.</p>
+                </body>`;
+            }
+        }
+
+        function toPassword() {
+            if(document.getElementById('email-in').value === "") return;
+            document.getElementById('login-step-1').style.display = 'none';
+            document.getElementById('login-step-2').style.display = 'block';
+        }
+
+        function runVoidSearch(q) {
+            if(!q) return;
+            window.open("https://duckduckgo.com" + encodeURIComponent(q), "_blank");
+        }
+    </script>
+</body>
+</html>
